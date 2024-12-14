@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Box Styler</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-around;
+            min-height: 100vh;
+            font-family: Arial, sans-serif;
+        }
+
+        #box {
+            width: 250px;
+            height: 250px;
+            border: 2px solid #000;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            margin-top: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .inputBox {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin: 20px 0;
+        }
+
+        .inputBox label {
+            font-weight: bold;
+            margin-right: 5px;
+            color: orangered;
+        }
+
+        .inputBox input {
+            padding: 10px;
+            border: 1px solid black;
+            border-radius: 5px;
+            max-width: 150px;
+        }
+
+        .inputBox input[type="text"] {
+            width: 100px;
+        }
+
+        @media screen and (max-width: 600px) {
+            .inputBox {
+                flex-direction: column;
+                gap: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="box"></div>
+
+    <div class="inputBox">
+        <label for="boxWidth">Box Width:</label>
+        <input type="text" id="boxWidth" placeholder="e.g. 300px" oninput="updateBox('width', this.value)">
+
+        <label for="boxHeight">Box Height:</label>
+        <input type="text" id="boxHeight" placeholder="e.g. 300px" oninput="updateBox('height', this.value)">
+
+        <label for="background">Box Background:</label>
+        <input type="color" id="background" oninput="updateBox('background', this.value)">
+
+        <label for="borderWidth">Border Width:</label>
+        <input type="text" id="borderWidth" placeholder="e.g. 2px" oninput="updateBox('borderWidth', this.value)">
+
+        <label for="borderColor">Border Color:</label>
+        <input type="color" id="borderColor" oninput="updateBox('borderColor', this.value)">
+
+        <label for="radius">Border Radius:</label>
+        <input type="text" id="radius" placeholder="e.g. 50%" oninput="updateBox('borderRadius', this.value)">
+    </div>
+
+    <script>
+        const box = document.getElementById('box');
+
+        function updateBox(styleProperty, value) {
+            if (styleProperty === 'width' || styleProperty === 'height' || styleProperty === 'borderWidth' || styleProperty === 'borderRadius') {
+                const isPercentage = value.trim().endsWith('%');
+                const isPixel = value.trim().endsWith('px');
+                if (!isPercentage && !isPixel && value.trim() !== '') {
+                    value += 'px';
+                }
+            }
+
+            box.style[styleProperty] = value;
+        }
+    </script>
+</body>
+</html>

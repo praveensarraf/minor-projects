@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Document-Upload</title>
+
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+        }
+
+        .form-container {
+            width: 100%;
+            max-width: 400px;
+            padding: 30px;
+            border: 2px solid gray;
+            border-radius: 10px;
+            background: #3f3f3f;
+            color: #ffffff;
+        }
+
+        #myForm {
+            width: 100%;
+        }
+
+        #myForm input[type="text"],
+        #myForm input[type="email"],
+        #myForm input[type="number"] {
+            width: calc(100% - 23px);
+            margin-bottom: 10px;
+            padding: 10px;
+            font-size: 15px;
+            border-radius: 5px;
+            border: 2px solid black;
+            outline: 0;
+        }
+
+        #myForm input[type="file"] {
+            width: calc(100% - 23px);
+            font-size: 17px;
+            margin: 10px 0 20px 0;
+        }
+
+        #myForm input[type="text"]:focus,
+        #myForm input[type="email"]:focus,
+        #myForm input[type="number"]:focus {
+            border: 2px solid orangered;
+            box-shadow: 0 0 5px orangered inset;
+        }
+
+        #ageWeightBox {
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+            gap: 10px;
+        }
+
+        #myForm button {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            background-color: orangered;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease-in-out;
+        }
+
+        #myForm button:hover {
+            background-color: #da3a00;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="form-container">
+        <form id="myForm">
+            <input type="text" id="name" placeholder="Enter Your Name" required>
+            <input type="email" id="email" placeholder=" Enter Your Email" required>
+            <div id="ageWeightBox">
+                <input type="number" id="age" placeholder="Age" min="0" required>
+                <input type="number" id="weight" placeholder="Weight" min="0" required>
+            </div>
+            <input type="file" id="file" required>
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+
+    <script>
+        document.getElementById("myForm").addEventListener("submit", function (event) {
+            event.preventDefault();
+
+            const fileInput = document.getElementById("file");
+            const file = fileInput.files[0];
+            const allowedExtensions = ["jpg", "jpeg", "png", "pdf", "docx", "doc"];
+            const maxFileSize = 2 * 1024 * 1024; // 2 MB
+
+            if (file) {
+                const fileExtension = file.name.split(".").pop().toLowerCase();
+                if (!allowedExtensions.includes(fileExtension)) {
+                    alert("Invalid file type. Please upload a JPG, PNG, or PDF file.");
+                    return;
+                }
+
+                if (file.size > maxFileSize) {
+                    alert("File size exceeds 2 MB.");
+                    return;
+                }
+            } else {
+                alert("Please upload a file.");
+                return;
+            }
+
+            alert("Form submitted successfully!");
+
+            const name = document.getElementById("name").value;
+            const age = document.getElementById("age").value;
+            const weight = document.getElementById("weight").value;
+            const email = document.getElementById("email").value;
+
+            const result = { name, age, weight, email, file: file.name };
+            console.log(result);
+        });
+
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mobile</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+        }
+
+        #mobileBox {
+            width: 340px;
+            height: 560px;
+            border-color: #222;
+            border-style: solid;
+            border-top-width: 40px;
+            border-right-width: 10px;
+            border-bottom-width: 80px;
+            border-left-width: 10px;
+            border-radius: 25px;
+            position: relative;
+            box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.7);
+        }
+
+        #mobileBox::before {
+            content: '';
+            position: absolute;
+            top: -25px;
+            left: 50%;
+            width: 15px;
+            height: 15px;
+            border-radius: 50%;
+            background: white;
+            box-shadow: 0 0 5px black inset;
+        }
+
+        #mobileBox img {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        #mobileBox button {
+            position: absolute;
+            bottom: -65px;
+            left: calc(50% - 30px);
+            width: 55px;
+            height: 55px;
+            border-radius: 50%;
+            background: white;
+            box-shadow: 0 0 20px black inset;
+            cursor: pointer;
+            border: 1px solid gray;
+        }
+
+        @media screen and (max-width: 400px) {
+            #mobileBox {
+                width: 250px;
+                height: 400px;
+            }
+        }
+        @media screen and (max-width: 270px) {
+            #mobileBox {
+                width: 100%;
+                height: 60vh;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div id="mobileBox">
+        <img src="https://w0.peakpx.com/wallpaper/141/453/HD-wallpaper-green-nature-green-nature-thumbnail.jpg" alt="">
+        <button type="button"></button>
+    </div>
+
+    <script>
+        const images = [
+            'https://storage.googleapis.com/littlenimobucket/wp-content/uploads/2024/05/a-lush-vibrant-nature-scene-for-mobile-phone-HD-Mobile-nature-wallpaper-2.jpeg',
+            'https://lh5.googleusercontent.com/proxy/bKUqHx56Jx_mWYVnkIoVhmG35c6P5ScwAk4rVQYyYZhuGeB_fdJyx8Qs3G1_efhAukNRYaeinaYjdxbBmyX6fmNE6TCiA4wuJEXQ0sPDm2heom0jNK_H9tc1V4A0dezqFE1657nVccZ3bqcLtw',
+            'https://w0.peakpx.com/wallpaper/345/31/HD-wallpaper-flowers-flower-green-nature-purple-thumbnail.jpg',
+            'https://w0.peakpx.com/wallpaper/141/453/HD-wallpaper-green-nature-green-nature-thumbnail.jpg'
+        ];
+
+        let currentIndex = 0;
+
+        document.querySelector('#mobileBox button').addEventListener('click', function () {
+            const img = document.querySelector('#mobileBox img');
+
+            currentIndex = (currentIndex + 1) % images.length;
+            img.src = images[currentIndex];
+        });
+    </script>
+</body>
+
+</html>

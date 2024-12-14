@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form Validation</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <style>
+        @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap");
+
+        :root{
+            --main-color: #0e787a;
+        }
+
+        * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Poppins", sans-serif;
+        }
+
+        body {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+        padding: 10px;
+        background: darkturquoise;
+        overflow: hidden;
+        }
+
+        #form {
+            width: 100%;
+            max-width: 500px;
+            padding: 20px;
+            background-color: var(--main-color);
+            color: var(--color);
+            border-radius: 5px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        #form h1{
+            color: white;
+            text-align: center;
+            text-decoration: underline;
+            font-size: 1.3em;
+            margin-bottom: 20px;
+        }
+
+        #form .input-control {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+        }
+
+        #form .input-control label{
+            margin-bottom: 5px;
+            font-weight: 600;
+            color: white;
+        }
+
+        #form .input-control input,
+        #form .input-control select,
+        #form .input-control textarea{
+            border: 2px solid white;
+            border-radius: 5px;
+            display: block;
+            font-size: 1em;
+            padding: 7px 10px;
+            width: 100%;
+            max-width: 100%;
+            color: var(--main-color);
+            background: white;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        #form .input-control input::selection,
+        #form .input-control select::selection,
+        #form .input-control textarea::selection{
+            background: var(--color);
+            color: var(--textColor);
+        }
+
+        #form .input-control textarea{
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        #form .input-control input:focus,
+        #form .input-control select:focus,
+        #form .input-control textarea:focus{
+            outline: 0;
+            box-shadow: 0 0 5px var(--main-color) inset;
+        }
+
+        #form .input-control.success input,
+        #form .input-control.success select,
+        #form .input-control.success textarea{
+            border-color: #09c372;
+        }
+
+        #form .input-control.error input,
+        #form .input-control.error select,
+        #form .input-control.error textarea{
+            border-color: red;
+        }
+
+        #form .input-control .error {
+            color: red;
+            font-size: 0.7em;
+            height: 17px;
+            padding: 0 5px;
+            margin-top: 2px;
+        }
+
+        #form button{
+            padding: 10px 20px;
+            margin-top: 10px;
+            color: white;
+            background: var(--main-color);
+            border: 2px solid white;
+            border-radius: 5px;
+            box-shadow: 0 0 10px 1.5px white;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease-in-out;
+        }
+
+        #form button:hover{
+            color: var(--main-color);
+            background: white;
+        }
+
+        #successMessage {
+            display: none;
+            background: #0e9f0e;
+            color: white;
+            border: 2px solid #0e9f0e;
+            box-shadow: 0 0 5px #09c372;
+            padding: 7px;
+            font-size: 1.1em;
+            font-weight: 600;
+            text-align: center;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <form id="form" action="https://api.web3forms.com/submit" method="POST">
+
+        <input type="hidden" name="access_key" value="2a06d155-c27b-44ea-9102-4b443a9cc2c4">
+
+        <h1>
+            Connect with me
+            <span><i class="fa-solid fa-seedling"></i></span>
+        </h1>
+
+        <div class="input-control">
+            <label for="name">Full Name</label>
+            <input id="name" name="name" type="text" placeholder=" Your name">
+            <div class="error"></div>
+        </div>
+
+        <div class="input-control">
+            <label for="email">Email Address</label>
+            <input id="email" name="email" type="email" placeholder=" yourid@email.com">
+            <div class="error"></div>
+        </div>
+
+        <div class="input-control">
+            <label for="number">Mobile Number</label>
+            <input id="number" name="number" type="tel" placeholder=" Your mobile number">
+            <div class="error"></div>
+        </div>
+
+        <div class="input-control">
+            <label for="message">Message</label>
+            <textarea name="message" id="message" rows="5" placeholder=" Your message"></textarea>
+            <div class="error"></div>
+        </div>
+
+        <button type="submit">Submit</button>
+
+        <div id="successMessage" aria-live="polite">Form submitted successfully!</div>
+    </form>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const form = document.getElementById('form');
+            const fullName = document.getElementById('name');
+            const email = document.getElementById('email');
+            const number = document.getElementById('number');
+            const textarea = document.getElementById('message');
+            const successMessage = document.getElementById('successMessage');
+            const errorDisplay = document.querySelectorAll('.error');
+
+            const setError = (element, message) => {
+                const inputControl = element.parentElement;
+                const errorDisplay = inputControl.querySelector('.error');
+
+                errorDisplay.innerText = message;
+                inputControl.classList.add('error');
+                inputControl.classList.remove('success');
+            };
+
+            const setSuccess = element => {
+                const inputControl = element.parentElement;
+                const errorDisplay = inputControl.querySelector('.error');
+
+                errorDisplay.innerText = '';
+                inputControl.classList.add('success');
+                inputControl.classList.remove('error');
+            };
+
+            const isValidEmail = email => {
+                const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                return regex.test(email.toLowerCase());
+            };
+
+            const validateInputs = () => {
+                const nameValue = fullName.value.trim();
+                const emailValue = email.value.trim();
+                const numberValue = number.value.trim();
+                const messageValue = textarea.value.trim();
+
+                let isFormValid = true;
+
+                if (nameValue === '') {
+                    setError(fullName, 'Name is required');
+                    isFormValid = false;
+                } else {
+                    setSuccess(fullName);
+                }
+
+                if (emailValue === '') {
+                    setError(email, 'Email is required');
+                    isFormValid = false;
+                } else if (!isValidEmail(emailValue)) {
+                    setError(email, 'Provide a valid email address');
+                    isFormValid = false;
+                } else {
+                    setSuccess(email);
+                }
+
+                if (numberValue === '') {
+                    setError(number, 'Mobile number is required');
+                    isFormValid = false;
+                } else if (!/^\d{5,13}$/.test(numberValue)) {
+                    setError(number, 'Mobile number must be between 5 and 13 digits');
+                    isFormValid = false;
+                } else {
+                    setSuccess(number);
+                }
+
+                if (messageValue === '') {
+                    setError(textarea, 'Please provide your valuable message');
+                    isFormValid = false;
+                } else {
+                    setSuccess(textarea);
+                }
+
+                if (isFormValid) {
+                    submitForm({ name: nameValue, email: emailValue, number: numberValue, message: messageValue });
+                }
+            };
+
+            const submitForm = formData => {
+                // Web3Forms API URL
+                const apiUrl = "https://api.web3forms.com/submit";
+
+                // Prepare form data
+                const data = {
+                    access_key: "2a06d155-c27b-44ea-9102-4b443a9cc2c4",
+                    ...formData,
+                };
+
+                // Make POST request
+                fetch(apiUrl, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(data),
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            successMessage.style.display = 'block';
+                            form.reset();
+
+                            setTimeout(() => {
+                                successMessage.style.display = 'none';
+                                document.querySelectorAll('.input-control').forEach(control => {
+                                    control.classList.remove('success');
+                                });
+                            }, 3000);
+                        } else {
+                            alert('Something went wrong. Please try again later.');
+                        }
+                    })
+                    .catch(error => {
+                        alert('Error submitting the form. Please try again.');
+                        console.error(error);
+                    });
+            };
+
+            form.addEventListener('submit', e => {
+                e.preventDefault();
+                validateInputs();
+            });
+        });
+
+    </script>
+</body>
+</html>

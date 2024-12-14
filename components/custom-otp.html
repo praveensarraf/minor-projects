@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OTP Generator</title>
+    <style>
+        body{
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: lightskyblue;
+        }
+
+        .container {
+            text-align: center;
+        }
+
+        input[type="number"],
+        button[type="submit"]{
+            padding: 10px;
+            outline: 0;
+            border: 3px solid gray;
+            color: darkblue;
+            border-radius: 10px;
+        }
+
+        button[type="submit"]{
+            color: black;
+            font-weight: 700;
+        }
+
+        input[type="number"]:focus{
+            border: 3px solid darkblue;
+        }
+
+        #otp-box {
+            margin-top: 20px;
+            font-size: 2rem;
+            font-weight: bold;
+            color: darkblue;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div>
+            <input type="number" id="otp-length" placeholder="Enter OTP length" min="1">
+            <button type="submit" id="get-otp">Get OTP</button>
+        </div>
+        
+        <div id="otp-box" aria-live="polite"></div>
+    </div>
+
+    <script>
+        function generateOTP(length) {
+            let otp = "";
+
+            for (let i = 0; i < length; i++) {
+                otp += Math.floor(Math.random() * 10).toString();
+            }
+
+            return otp;
+        }
+
+        function displayOTP() {
+            const lengthInput = document.getElementById("otp-length").value;
+            const otpBox = document.getElementById("otp-box");
+
+            // Validate input
+            if (!lengthInput || lengthInput <= 0) {
+                otpBox.textContent = "Please enter a valid OTP length.";
+                otpBox.style.color = "red";
+                return;
+            }
+
+            const otp = generateOTP(lengthInput);
+            otpBox.textContent = `Your OTP is: ${otp}`;
+            otpBox.style.color = "darkblue";
+        }
+
+        document.getElementById("get-otp").addEventListener("click", displayOTP);
+
+        // Add event listener for Enter key
+        document.getElementById("otp-length").addEventListener("keydown", function(event) {
+            if (event.key === "Enter") {
+                displayOTP();
+            }
+        });
+    </script>
+</body>
+</html>
