@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Verdana, Geneva, Tahoma, sans-serif;
+        }
+
+        body {
+            background-color: #f3f3f3;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+        }
+
+        .login-container {
+            width: 90%;
+            max-width: 500px;
+            background: deeppink;
+            padding: 50px 30px;
+            border-radius: 10px;
+            border: 1px solid #ad0760;
+            box-shadow: 0 0 5px #ad0760;
+        }
+
+        .login-container h3 {
+            text-align: center;
+            text-decoration: underline;
+            text-underline-offset: 5px;
+            color: white;
+        }
+
+
+        .form,
+        .form .input-group {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .form .input-group {
+            margin: 20px 0 5px;
+        }
+
+        .input-group .input-box {
+            position: relative;
+        }
+
+        .input-group .input-box input {
+            width: 100%;
+            padding: 10px;
+            background: transparent;
+            border: 2px solid white;
+            border-radius: 5px;
+            outline: none;
+            opacity: 0.7;
+        }
+
+        .input-box label {
+            position: absolute;
+            top: 50%;
+            left: 10px;
+            transform: translateY(-50%);
+            font-size: 0.8rem;
+            color: white;
+            pointer-events: none;
+            transition: all 0.3s ease;
+            opacity: 0.5;
+        }
+
+        .form button {
+            width: 100%;
+            padding: 5px 10px;
+            background: white;
+            border: none;
+            cursor: pointer;
+            color: #ad0760;
+            font-weight: 600;
+            border-radius: 5px;
+        }
+
+        .input-box input:focus~label,
+        .input-box input:valid~label,
+        .textinput:not(:placeholder-shown).textinput:not(:focus)~label {
+            top: 0;
+            left: 5px;
+            font-size: 0.6rem;
+            background: deeppink;
+            opacity: 1;
+            padding: 0 2px;
+        }
+
+        .input-box input:focus {
+            opacity: 1;
+            box-shadow: 0 0 5px white;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="login-container">
+        <h3>Login Form</h3>
+
+        <form class="form">
+            <div class="input-group">
+                <div class="input-box">
+                    <input type="email" placeholder="" class="textinput" required>
+                    <label>Email</label>
+                </div>
+                <div class="input-box">
+                    <input type="password" placeholder="" class="textinput" required>
+                    <label>Password</label>
+                </div>
+            </div>
+            <button type="submit">Login</button>
+        </form>
+    </div>
+</body>
+
+</html>
